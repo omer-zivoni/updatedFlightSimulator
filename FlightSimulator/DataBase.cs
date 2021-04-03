@@ -51,32 +51,32 @@ namespace FlightSimulator2
 
     }
 
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            string path = "C:/Users/omerz/Desktop/אוניברסיטה/FG/src/reg_flight.csv";
-            // this is the path on my computer. i dont know how to define a path that will be accurate on every computer
-            DataBase dataBase = new DataBase(path);
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        string path = @"C:\Users\noa83\Downloads\reg_flight.csv";
+    //        // this is the path on my computer. i dont know how to define a path that will be accurate on every computer
+    //        DataBase dataBase = new DataBase(path);
 
-            var client = new TcpClient("localhost", 5400);
-            var stream = client.GetStream();
+    //        var client = new TcpClient("localhost", 5400);
+    //        var stream = client.GetStream();
 
-            int currentRowIndex = 0; // bind to "currentRow" to jump to another frame
-            int lastRowIndex = dataBase.numberOfRows;
-            int timeToSleep = 100; // bind to "timeToSleep" to change the speed
+    //        int currentRowIndex = 0; // bind to "currentRow" to jump to another frame
+    //        int lastRowIndex = dataBase.numberOfRows;
+    //        int timeToSleep = 100; // bind to "timeToSleep" to change the speed
 
-            while (currentRowIndex != lastRowIndex)
-            {
-                var row = Encoding.ASCII.GetBytes(dataBase.getRowAtIndex(currentRowIndex) + "\n");
-                stream.Write(row, 0, row.Length);
-                Console.Write(dataBase.getRowAtIndex(currentRowIndex));
-                Thread.Sleep(timeToSleep);
-                currentRowIndex++;
-            }
+    //        while (currentRowIndex != lastRowIndex)
+    //        {
+    //            var row = Encoding.ASCII.GetBytes(dataBase.getRowAtIndex(currentRowIndex) + "\n");
+    //            stream.Write(row, 0, row.Length);
+    //            Console.Write(dataBase.getRowAtIndex(currentRowIndex));
+    //            Thread.Sleep(timeToSleep);
+    //            currentRowIndex++;
+    //        }
 
-            stream.Close();
-            client.Close();
-        }
-    }
+    //        stream.Close();
+    //        client.Close();
+    //    }
+    //}
 }

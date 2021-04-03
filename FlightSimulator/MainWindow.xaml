@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightSimulator2"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+          xmlns:vm="clr-namespace:FlightSimulator2.ViewModel"
         mc:Ignorable="d"
+        
          xmlns:oxy="http://oxyplot.org/wpf"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
     <Grid>
         <Grid Background="LightGray">
             <Grid.ColumnDefinitions>
@@ -14,11 +20,21 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <ListBox >
-                <ListBoxItem>item 1</ListBoxItem>
-                <ListBoxItem>item 2</ListBoxItem>
-                <ListBoxItem>item 3</ListBoxItem>
-            </ListBox>
+            <!--<ListBox ItemsSource="{Binding Attributes}" Name="listBox" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedAttributesCommand, Mode=TwoWay}"  CommandParameter="{Binding ElementName=listBox, Path=SelectedItems}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>-->
+
+            <ListBox x:Name="myListBox" ItemsSource="{Binding Attributes}" SelectedIndex="{Binding SelectedAttributeIndex}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedAttributesCommand}"  CommandParameter="{Binding ElementName=myListBox, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox >
 
 
 
