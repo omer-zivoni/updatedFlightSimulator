@@ -11,7 +11,7 @@ using System.Windows.Input;
 namespace FlightSimulator2.ViewModel
 {
     /// <summary>
-    /// This class contains properties that the main View can data bind to.
+    /// This class contains properties that the main View can data bind to.g
     /// <para>
     /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
     /// </para>
