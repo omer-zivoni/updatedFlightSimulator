@@ -3,9 +3,11 @@ using GalaSoft.MvvmLight.Command;
 using OxyPlot;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Timers;
 using System.Windows.Input;
 
 namespace FlightSimulator2.ViewModel
@@ -24,17 +26,30 @@ namespace FlightSimulator2.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase,INotifyPropertyChanged
     {
+        // this class counts the time that passed since the beginning of the video simulator
+        //private Timer timer;
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         /// 
         public ICommand SelectedAttributesCommand { get; set; }
+       static string path = @"C:\Users\noa83\Downloads\reg_flight.csv";
+        //int currentRowIndex = 0; // bind to "currentRow" to jump to another frame
+
+        
         public MainViewModel()
         {
             SelectedAttributesCommand = new RelayCommand(SelectedAttributeFunc);
-            string path = @"C:\Users\noa83\Downloads\reg_flight.csv";
+           
             ParseXml(@"C:\Users\noa83\Downloads\playback_small (2).xml");
             ParseCsv(path);
+
+            //lastRowIndex = dataBase.numberOfRows;
+            //timer = new Timer(100);
+            //timer.Elapsed += Timer_Elapsed;
+            //timer.AutoReset = true;
+            //timer.Enabled = true;
 
 
             //DataContext = this;
@@ -49,18 +64,46 @@ namespace FlightSimulator2.ViewModel
                                   new DataPoint(40, 12),
                                   new DataPoint(50, 12)
                               };
+
+            
         }
+
+
+        DataBase dataBase = new DataBase(path);
+        //int lastRowIndex;
+        //private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        //{
+        //    if (currentRowIndex < lastRowIndex)
+        //    {
+        //        var row = Encoding.ASCII.GetBytes(dataBase.getRowAtIndex(currentRowIndex) + "\n");
+        //        Console.Write(dataBase.getRowAtIndex(currentRowIndex));
+        //        currentRowIndex++;
+        //    }          
+        //}
+
         public int SelectedAttributeIndex { get; set; }
         void SelectedAttributeFunc()
         {
             var selection = SelectedAttributeIndex;
-           // var name = Attributes[selection];
+            var name = Attributes[selection];
+            Title1 = name;
 
-            DataBase dataBase = new DataBase(@"C:\Users\noa83\Downloads\reg_flight.csv");
+            //DataBase dataBase = new DataBase(@"C:\Users\noa83\Downloads\reg_flight.csv");
 
-            var test = dataBase.getColumnAtIndex(selection);
+            //var test = dataBase.getColumnAtIndex(selection);
+            var data = dataBase.data;
+            var dataPoints = new ObservableCollection<DataPoint>();
+
+
+            for (int i = 0; i < dataBase.numberOfRows; i++)
+            {
+                dataPoints.Add(new DataPoint(i,double.Parse(data[i][selection])));
+              //  dataPoints.Add(new DataPoint(i, r.Next(70)));
+            }
+
+            Points_Test = dataPoints;
         }
-
+        Random r = new Random();
         public string[] Attributes { get; set; }
         public void ParseXml(string path)
         {
@@ -79,7 +122,7 @@ namespace FlightSimulator2.ViewModel
 
             int currentRowIndex = 0; // bind to "currentRow" to jump to another frame
             int lastRowIndex = dataBase.numberOfRows;
-            int timeToSleep = 100; // bind to "timeToSleep" to change the speed
+            //int timeToSleep = 100; // bind to "timeToSleep" to change the speed
 
             while (currentRowIndex != lastRowIndex)
             {
@@ -94,7 +137,34 @@ namespace FlightSimulator2.ViewModel
 
         public string Title { get; private set; }
 
+        private string title1;
+        public string Title1
+        {
+            get { return title1; }
+            set
+            {
+                title1 = value;
+                NotifyPropertyChanged("Title1");
+            }
+        }
+
         public IList<DataPoint> Points { get; private set; }
+
+
+        private IList<DataPoint> points_Test;
+        public IList<DataPoint> Points_Test
+        {
+            get
+            {
+                return points_Test;
+
+            }
+            set
+            {
+                points_Test = value;
+                NotifyPropertyChanged("Points_Test");
+            }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

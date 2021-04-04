@@ -11,7 +11,7 @@ namespace FlightSimulator2
 {
     class DataBase
     {
-        private string[][] data;
+        public string[][] data;
 
         public int numberOfRows
         {
@@ -66,6 +66,8 @@ namespace FlightSimulator2
     //        int lastRowIndex = dataBase.numberOfRows;
     //        int timeToSleep = 100; // bind to "timeToSleep" to change the speed
 
+
+    // // TO FIX: add one more thread (this while loop kinda never ends...)
     //        while (currentRowIndex != lastRowIndex)
     //        {
     //            var row = Encoding.ASCII.GetBytes(dataBase.getRowAtIndex(currentRowIndex) + "\n");

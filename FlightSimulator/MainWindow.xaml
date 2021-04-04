@@ -52,9 +52,9 @@
 
 
 
-                <oxy:Plot Title="{Binding Title}">
+                <oxy:Plot Title="{Binding Title1}" >
                     <oxy:Plot.Series>
-                        <oxy:LineSeries ItemsSource="{Binding Points}"  MarkerFill="SteelBlue"   MarkerType="Circle"  Color="Transparent" />
+                        <oxy:LineSeries ItemsSource="{Binding Points_Test}"  MarkerFill="SteelBlue"   MarkerType="Circle"  Color="Transparent" />
                     </oxy:Plot.Series>
                 </oxy:Plot>
 
